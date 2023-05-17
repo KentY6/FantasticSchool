@@ -10,8 +10,6 @@ export const MenuArea = ({ navigation, isActive }) => {
     navigation.navigate("会話画面");
   };
 
-  console.log(isActive);
-
   return (
     <View style={styles.menuArea}>
       <View>
