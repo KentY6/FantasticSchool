@@ -1,7 +1,13 @@
 import { View, Text, StyleSheet } from "react-native";
 import { MenuArea } from "../components/MenuArea";
+import React from "react";
 
 export const TalkPage = ({ navigation }) => {
+  //   //デフォルトのヘッダーを非表示にする
+  React.useLayoutEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
+
   return (
     <View style={styles.talkPage}>
       <Text>TalkPage</Text>

@@ -3,14 +3,12 @@ import { IconButton } from "react-native-paper";
 
 export const MenuArea = ({ navigation, isActive }) => {
   const navigateSelectPage = () => {
-    navigation.navigate("先生選択画面");
+    navigation.navigate("先生選択画面", {});
   };
 
   const navigateTalkPage = async () => {
     navigation.navigate("会話画面");
   };
-
-  console.log(isActive);
 
   return (
     <View style={styles.menuArea}>

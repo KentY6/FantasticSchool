@@ -1,11 +1,31 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { MenuArea } from "../components/MenuArea";
+import { TeachersList } from "../components/TeachersList";
+import { Header } from "../components/Header";
+import React, { useContext } from "react";
 
 export const SelectTeacherPage = ({ navigation }) => {
+  // // stateを受け取る
+  const { isActiveTeacher, setIsActiveTeacher } = useContext(dataContext);
+
+  // 先生切り替え機能
+  const toggleActiveTeacher = (data) => {
+    setIsActiveTeacher(data.Name);
+  };
+
+  //デフォルトの ヘッダーを非表示にする
+  React.useLayoutEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
+
   return (
     <View style={styles.selectTeacherPage}>
-      <View>
-        <Text>SelectTeacher</Text>
+      <Header title={"先生選択画面"} />
+      <View style={styles.teachers}>
+        <TeachersList
+          isActiveTeacher={isActiveTeacher}
+          toggleActiveTeacher={toggleActiveTeacher}
+        />
       </View>
 
       <View style={styles.bottomMenu}>
@@ -22,6 +42,7 @@ const styles = StyleSheet.create({
     position: "relative",
     flex: 8,
   },
+  teachers: { marginTop: "5%", marginBottom: "35%" },
   bottomMenu: {
     position: "absolute",
     bottom: 0,
