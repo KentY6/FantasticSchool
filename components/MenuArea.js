@@ -3,7 +3,7 @@ import { IconButton } from "react-native-paper";
 
 export const MenuArea = ({ navigation, isActive }) => {
   const navigateSelectPage = () => {
-    navigation.navigate("先生選択画面");
+    navigation.navigate("先生選択画面", {});
   };
 
   const navigateTalkPage = async () => {
