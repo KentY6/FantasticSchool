@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
+import { Header } from "../components/Header";
 import { MenuArea } from "../components/MenuArea";
 import React from "react";
 
@@ -10,7 +11,7 @@ export const TalkPage = ({ navigation }) => {
 
   return (
     <View style={styles.talkPage}>
-      <Text>TalkPage</Text>
+      <Header title={"会話画面"} />
 
       <View style={styles.bottomMenu}>
         <MenuArea navigation={navigation} isActive={"talkPage"} />

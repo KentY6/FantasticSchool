@@ -3,6 +3,7 @@ import { TalkPage } from "./TalkPage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useState, createContext } from "react";
+import { teachers } from "../utils/TeachersData";
 
 const Stack = createNativeStackNavigator();
 dataContext = createContext();
@@ -15,6 +16,10 @@ export const Main = () => {
     isActiveTeacher,
     setIsActiveTeacher,
   };
+
+  const activeTeachersData = teachers.filter(
+    (data) => data.Name === isActiveTeacher
+  );
 
   return (
     <NavigationContainer>
