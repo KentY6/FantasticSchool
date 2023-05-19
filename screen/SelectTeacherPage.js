@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { MenuArea } from "../components/MenuArea";
 import { TeachersList } from "../components/TeachersList";
 import { Header } from "../components/Header";
@@ -21,6 +21,11 @@ export const SelectTeacherPage = ({ navigation }) => {
   return (
     <View style={styles.selectTeacherPage}>
       <Header title={"先生選択画面"} />
+      <View style={styles.selectMsg}>
+        <Text style={styles.selectMsgText}>Select Your Teacher</Text>
+        <Text style={styles.selectMsgText}>好きな先生を選んでみよう！</Text>
+      </View>
+
       <View style={styles.teachers}>
         <TeachersList
           isActiveTeacher={isActiveTeacher}
@@ -42,7 +47,13 @@ const styles = StyleSheet.create({
     position: "relative",
     flex: 8,
   },
-  teachers: { marginTop: "5%", marginBottom: "35%" },
+  selectMsg: {
+    margin: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  selectMsgText: { fontSize: 20 },
+  teachers: { marginTop: "5%", marginBottom: "55%" },
   bottomMenu: {
     position: "absolute",
     bottom: 0,
