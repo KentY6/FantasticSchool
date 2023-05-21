@@ -13,14 +13,16 @@ export const TeachersList = ({ isActiveTeacher, toggleActiveTeacher }) => {
     <ScrollView>
       <View style={styles.teachersArea}>
         {teachers.map((data, index) => (
-          <TouchableOpacity onPress={() => toggleActiveTeacher(data)}>
+          <TouchableOpacity
+            onPress={() => toggleActiveTeacher(data)}
+            key={index}
+          >
             <View
               style={
-                isActiveTeacher === data.Name
+                isActiveTeacher.Name === data.Name
                   ? styles.activeTeacherCard
                   : styles.teacherCard
               }
-              key={index}
             >
               <Image style={styles.teacherImg} source={data.Img} />
               <View style={styles.teacherData}>
