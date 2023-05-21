@@ -1,7 +1,7 @@
 import { View, StyleSheet, Text } from "react-native";
-import { MenuArea } from "../components/MenuArea";
-import { TeachersList } from "../components/TeachersList";
-import { Header } from "../components/Header";
+import { MenuArea } from "../../components/MenuArea";
+import { TeachersList } from "../../components/TeachersList";
+import { Header } from "../../components/Header";
 import React, { useContext } from "react";
 
 export const SelectTeacherPage = ({ navigation }) => {

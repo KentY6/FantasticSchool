@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet } from "react-native";
-import { Header } from "../components/Header";
-import { MenuArea } from "../components/MenuArea";
+import { Header } from "../../components/Header";
+import { MenuArea } from "../../components/MenuArea";
 import React, { useContext } from "react";
-import { TalkArea } from "../components/TalkArea";
-import { InputForm } from "../components/InputForm";
+import { TalkArea } from "../../components/TalkArea";
+import { InputForm } from "../../components/InputForm";
 
 export const TalkPage = ({ navigation }) => {
   //   //デフォルトのヘッダーを非表示にする
