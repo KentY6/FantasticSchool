@@ -1,17 +1,30 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Header } from "../../components/Header";
 import { MenuArea } from "../../components/MenuArea";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { TalkArea } from "../../components/TalkArea";
 import { InputForm } from "../../components/InputForm";
 
 export const TalkPage = ({ navigation }) => {
+  const [conversationLog, setConversationLog] = useState([]);
+
   //   //デフォルトのヘッダーを非表示にする
   React.useLayoutEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
+  // 選ばれている先生を受け取る
   const { isActiveTeacher } = useContext(dataContext);
+
+  // チャット欄に入力したテキストを送る
+  const talkStart = (text) => {
+    const newConversationLog = {
+      ...conversationLog,
+      talkText: text,
+      whoseText: "you",
+    };
+    setConversationLog([...conversationLog, newConversationLog]);
+  };
 
   return (
     <View style={styles.talkPage}>
@@ -21,10 +34,13 @@ export const TalkPage = ({ navigation }) => {
         <Text style={styles.teachersName}>{isActiveTeacher.Name}</Text>
       </View>
 
-      <TalkArea isActiveTeacher={isActiveTeacher} />
+      <TalkArea
+        isActiveTeacher={isActiveTeacher}
+        conversationLog={conversationLog}
+      />
 
       <View style={styles.InputForm}>
-        <InputForm />
+        <InputForm talkStart={talkStart} />
       </View>
 
       <View style={styles.bottomMenu}>

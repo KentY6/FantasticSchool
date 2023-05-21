@@ -8,20 +8,24 @@ import {
 } from "react-native";
 import { IconButton } from "react-native-paper";
 
-export const InputForm = () => {
+export const InputForm = ({ talkStart }) => {
   const [text, setText] = useState("");
 
-  const inputText = (e) => {
-    e.preventDefault();
-    setText(e.target.value);
+  const submitText = () => {
+    talkStart(text);
+    setText("");
   };
 
   return (
     <View style={styles.inputForm}>
-      <TouchableOpacity style={styles.sendIconBox}>
+      <TouchableOpacity style={styles.sendIconBox} onPress={submitText}>
         <IconButton style={styles.sendIcon} icon="send" size={20} />
       </TouchableOpacity>
-      <TextInput style={styles.textInput} value={text} onChange={inputText} />
+      <TextInput
+        style={styles.textInput}
+        value={text}
+        onChangeText={(text) => setText(text)}
+      />
     </View>
   );
 };
