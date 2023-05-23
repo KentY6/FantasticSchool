@@ -1,12 +1,16 @@
 import { View, Text, StyleSheet } from "react-native";
-import { Header } from "../../components/Header";
-import { MenuArea } from "../../components/MenuArea";
+import { Header } from "../components/Header";
+import { MenuArea } from "../components/MenuArea";
 import React, { useContext, useState } from "react";
-import { TalkArea } from "../../components/TalkArea";
-import { InputForm } from "../../components/InputForm";
+import { TalkArea } from "../components/TalkArea";
+import { InputForm } from "../components/InputForm";
+import axios from "axios";
 
 export const TalkPage = ({ navigation }) => {
+  // 会話履歴を格納するstate
   const [conversationLog, setConversationLog] = useState([]);
+  // chatGPT APIの回答を格納する
+  const [teachersAnswer, setTeachersAnswer] = useState("");
 
   //   //デフォルトのヘッダーを非表示にする
   React.useLayoutEffect(() => {
@@ -16,6 +20,15 @@ export const TalkPage = ({ navigation }) => {
   // 選ばれている先生を受け取る
   const { isActiveTeacher } = useContext(dataContext);
 
+  // chatGPTのApiKey
+  // const chatGptKey =
+  // chatGPTのエンドポイント
+  const chatGptUrl = "https://api.openai.com/v1/chat/completions";
+  // chatGptのバージョン
+  const chatGptModel = "gpt-3.5-turbo";
+  // APIに渡す先生の設定
+  const teachersSetting = `Please establish a conversation for the following messages.However, you should be conversing as if you were in the following settings.${isActiveTeacher}`;
+
   // チャット欄に入力したテキストを送る
   const talkStart = (text) => {
     const newConversationLog = {
@@ -24,7 +37,36 @@ export const TalkPage = ({ navigation }) => {
       whoseText: "you",
     };
     setConversationLog([...conversationLog, newConversationLog]);
+    // getChatGptApi(text);
   };
+
+  const getChatGptApi = (text) => {
+    try {
+      axios.post(
+        { chatGptUrl },
+        {
+          model: chatGptModel,
+          message: [
+            {
+              role: "user",
+              content: text,
+            },
+          ],
+        },
+        {
+          // HTTPヘッダー(認証)
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${chatGptKey}`,
+          },
+        }
+      ),
+        setTeachersAnswer(response.data.choices[0].message.content.trim());
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  console.log(teachersAnswer);
 
   return (
     <View style={styles.talkPage}>

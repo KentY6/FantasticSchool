@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { teachers } from "../src/utils/TeachersData";
+import { teachers } from "../utils/TeachersData";
 import { TeachersAttribute } from "./TeachersAttribute";
 
 export const TeachersList = ({ isActiveTeacher, toggleActiveTeacher }) => {
