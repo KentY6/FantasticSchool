@@ -21,7 +21,7 @@ export const TalkPage = ({ navigation }) => {
   const { isActiveTeacher } = useContext(dataContext);
 
   // chatGPTのApiKey
-  // const chatGptKey =
+  const chatGptKey = "";
   // chatGPTのエンドポイント
   const chatGptUrl = "https://api.openai.com/v1/chat/completions";
   // chatGptのバージョン
@@ -37,7 +37,7 @@ export const TalkPage = ({ navigation }) => {
       whoseText: "you",
     };
     setConversationLog([...conversationLog, newConversationLog]);
-    // getChatGptApi(text);
+    getChatGptApi(text);
   };
 
   const getChatGptApi = (text) => {
