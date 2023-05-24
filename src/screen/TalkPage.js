@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Header } from "../components/Header";
 import { MenuArea } from "../components/MenuArea";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TalkArea } from "../components/TalkArea";
 import { InputForm } from "../components/InputForm";
 import axios from "axios";
@@ -27,10 +27,11 @@ export const TalkPage = ({ navigation }) => {
   // chatGptのバージョン
   const chatGptModel = "gpt-3.5-turbo";
   // APIに渡す先生の設定
-  const teachersSetting = `Please establish a conversation for the following messages.However, you should be conversing as if you were in the following settings.${isActiveTeacher}`;
+  const teachersSetting = `You are not an AI.Please answer the questions by pretending to be a person from the following settings.■This is your settings.name:${isActiveTeacher.Name},age:${isActiveTeacher.Age},sex:${isActiveTeacher.Sex},job:${isActiveTeacher.Job} `;
 
   // チャット欄に入力したテキストを送る
   const talkStart = (text) => {
+    if (text.length === 0) return;
     const newConversationLog = {
       ...conversationLog,
       talkText: text,
@@ -40,13 +41,21 @@ export const TalkPage = ({ navigation }) => {
     getChatGptApi(text);
   };
 
-  const getChatGptApi = (text) => {
+  const getChatGptApi = async (text) => {
     try {
-      axios.post(
-        { chatGptUrl },
+      const response = await axios.post(
+        chatGptUrl,
         {
           model: chatGptModel,
-          message: [
+          messages: [
+            // AIに演じさせる設定
+            {
+              role: "system",
+              content: teachersSetting,
+            },
+            // 一つ前のの会話を渡す
+            { role: "assistant", content: teachersAnswer },
+            // 質問を渡す
             {
               role: "user",
               content: text,
@@ -60,13 +69,22 @@ export const TalkPage = ({ navigation }) => {
             Authorization: `Bearer ${chatGptKey}`,
           },
         }
-      ),
-        setTeachersAnswer(response.data.choices[0].message.content.trim());
+      );
+      setTeachersAnswer(response.data.choices[0].message.content.trim());
     } catch (err) {
       console.error(err);
     }
   };
-  console.log(teachersAnswer);
+
+  useEffect(() => {
+    if (teachersAnswer.length === 0) return;
+    const newConversationLog = {
+      ...conversationLog,
+      talkText: teachersAnswer,
+      whoseText: "teacher",
+    };
+    setConversationLog([...conversationLog, newConversationLog]);
+  }, [teachersAnswer]);
 
   return (
     <View style={styles.talkPage}>
