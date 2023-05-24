@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { TalkArea } from "../components/TalkArea";
 import { InputForm } from "../components/InputForm";
 import axios from "axios";
+import { CHAT_GPT_KEY } from "@env";
 
 export const TalkPage = ({ navigation }) => {
   // 会話履歴を格納するstate
@@ -21,7 +22,7 @@ export const TalkPage = ({ navigation }) => {
   const { isActiveTeacher } = useContext(dataContext);
 
   // chatGPTのApiKey
-  const chatGptKey = "";
+  const chatGptKey = CHAT_GPT_KEY;
   // chatGPTのエンドポイント
   const chatGptUrl = "https://api.openai.com/v1/chat/completions";
   // chatGptのバージョン
