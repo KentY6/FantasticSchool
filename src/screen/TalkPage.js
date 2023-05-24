@@ -10,8 +10,10 @@ import { CHAT_GPT_KEY } from "@env";
 export const TalkPage = ({ navigation }) => {
   // 会話履歴を格納するstate
   const [conversationLog, setConversationLog] = useState([]);
-  // chatGPT APIの回答を格納する
+  // chatGPT APIの回答を格納するstate
   const [teachersAnswer, setTeachersAnswer] = useState("");
+  // 翻訳結果を格納するstate
+  const [translationText, setTranslationText] = useState("");
 
   //   //デフォルトのヘッダーを非表示にする
   React.useLayoutEffect(() => {
@@ -98,6 +100,7 @@ export const TalkPage = ({ navigation }) => {
       <TalkArea
         isActiveTeacher={isActiveTeacher}
         conversationLog={conversationLog}
+        translationText={translationText}
       />
 
       <View style={styles.InputForm}>

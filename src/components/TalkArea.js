@@ -1,7 +1,11 @@
 import React from "react";
-import { View, StyleSheet, Text, Image } from "react-native";
+import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 
-export const TalkArea = ({ isActiveTeacher, conversationLog }) => {
+export const TalkArea = ({
+  isActiveTeacher,
+  conversationLog,
+  translationText,
+}) => {
   return (
     <View style={styles.talkArea}>
       {conversationLog.map((data, index) => (
@@ -36,6 +40,24 @@ export const TalkArea = ({ isActiveTeacher, conversationLog }) => {
               ></View>
               <Text>{data.talkText}</Text>
             </View>
+          </View>
+          <View
+            style={
+              data.whoseText === "you"
+                ? styles.nonActive
+                : styles.translationBox
+            }
+          >
+            <TouchableOpacity style={styles.translationButton}>
+              <Text>訳</Text>
+            </TouchableOpacity>
+            <View
+              style={
+                translationText.length === 0
+                  ? styles.nonActive
+                  : styles.translationText
+              }
+            ></View>
           </View>
         </View>
       ))}
@@ -108,5 +130,30 @@ const styles = StyleSheet.create({
     borderLeftColor: "transparent",
   },
   teachersIcon: { width: 60, height: 60 },
+  translationBox: {
+    flexDirection: "row",
+    maxWidth: "100%",
+    alignItems: "flex-start",
+    justifyContent: "flex-end",
+    marginLeft: 30,
+    marginTop: 10,
+  },
+  translationButton: {
+    width: 30,
+    height: 30,
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 15,
+  },
+  translationText: {
+    maxWidth: "60%",
+    marginLeft: 10,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: "white",
+    position: "relative",
+  },
+
   nonActive: { display: "none" },
 });
