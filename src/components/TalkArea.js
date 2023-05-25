@@ -1,13 +1,21 @@
 import React from "react";
-import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 
 export const TalkArea = ({
   isActiveTeacher,
   conversationLog,
   translationText,
+  getDeepLApi,
 }) => {
   return (
-    <View style={styles.talkArea}>
+    <ScrollView style={styles.talkArea}>
       {conversationLog.map((data, index) => (
         <View
           style={
@@ -48,7 +56,10 @@ export const TalkArea = ({
                 : styles.translationBox
             }
           >
-            <TouchableOpacity style={styles.translationButton}>
+            <TouchableOpacity
+              style={styles.translationButton}
+              onPress={() => getDeepLApi(data.talkText)}
+            >
               <Text>訳</Text>
             </TouchableOpacity>
             <View
@@ -57,17 +68,18 @@ export const TalkArea = ({
                   ? styles.nonActive
                   : styles.translationText
               }
-            ></View>
+            >
+              <Text></Text>
+            </View>
           </View>
         </View>
       ))}
-      {/* <Image style={styles.teachersIcon} source={isActiveTeacher.Img} /> */}
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  talkArea: { width: "100%" },
+  talkArea: { width: "100%", marginBottom: 120 },
   talkBox: { flexDirection: "row" },
   yourTextContainer: {
     maxWidth: "100%",

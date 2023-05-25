@@ -17,6 +17,7 @@
     "@react-navigation/stack": "^6.3.16",
     "axios": "^1.4.0",
     "babel-plugin-dotenv-import": "^3.0.1",
+    "deepl": "^1.0.13",
     "dotenv": "^16.0.3",
     "expo": "~48.0.15",
     "expo-status-bar": "~1.4.4",

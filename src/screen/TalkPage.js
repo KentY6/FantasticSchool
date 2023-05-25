@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { TalkArea } from "../components/TalkArea";
 import { InputForm } from "../components/InputForm";
 import axios from "axios";
-import { CHAT_GPT_KEY } from "@env";
+import { CHAT_GPT_KEY, DEEPL_KEY } from "@env";
 
 export const TalkPage = ({ navigation }) => {
   // 会話履歴を格納するstate
@@ -23,14 +23,19 @@ export const TalkPage = ({ navigation }) => {
   // 選ばれている先生を受け取る
   const { isActiveTeacher } = useContext(dataContext);
 
-  // chatGPTのApiKey
+  // chatGPTのApiキー
   const chatGptKey = CHAT_GPT_KEY;
   // chatGPTのエンドポイント
   const chatGptUrl = "https://api.openai.com/v1/chat/completions";
   // chatGptのバージョン
   const chatGptModel = "gpt-3.5-turbo";
   // APIに渡す先生の設定
-  const teachersSetting = `You are not an AI.Please answer the questions by pretending to be a person from the following settings.■This is your settings.name:${isActiveTeacher.Name},age:${isActiveTeacher.Age},sex:${isActiveTeacher.Sex},job:${isActiveTeacher.Job} `;
+  const teachersSetting = `You are not an AI.Please answer the questions by pretending to be a person from the following settings.If you get a question that is not in your setting, make a natural inference from your setting and have a conversation.■This is your settings.name:${isActiveTeacher.Name},age:${isActiveTeacher.Age},sex:${isActiveTeacher.Sex},job:${isActiveTeacher.Job} `;
+
+  // deepLのApiキー
+  const deepLKey = `DeepL-Auth-Key ${DEEPL_KEY}`;
+  // deppLのエンドポイント
+  const deepLUrl = "https://api-free.deepl.com/v2/translate";
 
   // チャット欄に入力したテキストを送る
   const talkStart = (text) => {
@@ -44,6 +49,7 @@ export const TalkPage = ({ navigation }) => {
     getChatGptApi(text);
   };
 
+  // chatGPTのAPI取得
   const getChatGptApi = async (text) => {
     try {
       const response = await axios.post(
@@ -56,7 +62,7 @@ export const TalkPage = ({ navigation }) => {
               role: "system",
               content: teachersSetting,
             },
-            // 一つ前のの会話を渡す
+            // 一つ前の会話を渡す
             { role: "assistant", content: teachersAnswer },
             // 質問を渡す
             {
@@ -73,12 +79,14 @@ export const TalkPage = ({ navigation }) => {
           },
         }
       );
+      // 回答を格納する
       setTeachersAnswer(response.data.choices[0].message.content.trim());
     } catch (err) {
       console.error(err);
     }
   };
 
+  // chatGPTからの返答を会話ログに追加する
   useEffect(() => {
     if (teachersAnswer.length === 0) return;
     const newConversationLog = {
@@ -88,6 +96,32 @@ export const TalkPage = ({ navigation }) => {
     };
     setConversationLog([...conversationLog, newConversationLog]);
   }, [teachersAnswer]);
+
+  // DeepLのAPIで翻訳する
+  const getDeepLApi = async (talkText) => {
+    if (translationText.length !== 0) {
+      setTranslationText("");
+      return;
+    }
+    try {
+      const response = await axios.post(
+        deepLUrl,
+        {
+          text: talkText,
+          target_lang: "JA",
+        },
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: deepLKey,
+          },
+        }
+      );
+      setTranslationText(response.data.translations[0].text);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <View style={styles.talkPage}>
@@ -101,6 +135,7 @@ export const TalkPage = ({ navigation }) => {
         isActiveTeacher={isActiveTeacher}
         conversationLog={conversationLog}
         translationText={translationText}
+        getDeepLApi={getDeepLApi}
       />
 
       <View style={styles.InputForm}>
