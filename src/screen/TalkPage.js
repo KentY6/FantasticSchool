@@ -12,8 +12,6 @@ export const TalkPage = ({ navigation }) => {
   const [conversationLog, setConversationLog] = useState([]);
   // chatGPT APIの回答を格納するstate
   const [teachersAnswer, setTeachersAnswer] = useState("");
-  // 翻訳結果を格納するstate
-  const [translationText, setTranslationText] = useState("");
 
   //   //デフォルトのヘッダーを非表示にする
   React.useLayoutEffect(() => {
@@ -44,6 +42,7 @@ export const TalkPage = ({ navigation }) => {
       ...conversationLog,
       talkText: text,
       whoseText: "you",
+      translationText: "",
     };
     setConversationLog([...conversationLog, newConversationLog]);
     getChatGptApi(text);
@@ -93,21 +92,18 @@ export const TalkPage = ({ navigation }) => {
       ...conversationLog,
       talkText: teachersAnswer,
       whoseText: "teacher",
+      translationText: "",
     };
     setConversationLog([...conversationLog, newConversationLog]);
   }, [teachersAnswer]);
 
   // DeepLのAPIで翻訳する
-  const getDeepLApi = async (talkText) => {
-    if (translationText.length !== 0) {
-      setTranslationText("");
-      return;
-    }
+  const getDeepLApi = async (data, index) => {
     try {
       const response = await axios.post(
         deepLUrl,
         {
-          text: talkText,
+          text: data.talkText,
           target_lang: "JA",
         },
         {
@@ -117,7 +113,12 @@ export const TalkPage = ({ navigation }) => {
           },
         }
       );
-      setTranslationText(response.data.translations[0].text);
+
+      // 翻訳結果をオブジェクトに追加する
+      const resData = response.data.translations[0].text;
+      const addTranslationText = [...conversationLog];
+      addTranslationText[index] = { ...data, translationText: resData };
+      setConversationLog(addTranslationText);
     } catch (err) {
       console.error(err);
     }
@@ -134,7 +135,6 @@ export const TalkPage = ({ navigation }) => {
       <TalkArea
         isActiveTeacher={isActiveTeacher}
         conversationLog={conversationLog}
-        translationText={translationText}
         getDeepLApi={getDeepLApi}
       />
 

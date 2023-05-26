@@ -8,12 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 
-export const TalkArea = ({
-  isActiveTeacher,
-  conversationLog,
-  translationText,
-  getDeepLApi,
-}) => {
+export const TalkArea = ({ isActiveTeacher, conversationLog, getDeepLApi }) => {
   return (
     <ScrollView style={styles.talkArea}>
       {conversationLog.map((data, index) => (
@@ -58,18 +53,18 @@ export const TalkArea = ({
           >
             <TouchableOpacity
               style={styles.translationButton}
-              onPress={() => getDeepLApi(data.talkText)}
+              onPress={() => getDeepLApi(data, index)}
             >
               <Text>訳</Text>
             </TouchableOpacity>
             <View
               style={
-                translationText.length === 0
+                data.translationText.length === 0
                   ? styles.nonActive
                   : styles.translationText
               }
             >
-              <Text></Text>
+              <Text>{data.translationText}</Text>
             </View>
           </View>
         </View>
