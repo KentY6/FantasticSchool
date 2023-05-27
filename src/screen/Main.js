@@ -8,7 +8,13 @@ const Stack = createNativeStackNavigator();
 dataContext = createContext();
 
 export const Main = () => {
-  const [isActiveTeacher, setIsActiveTeacher] = useState([]);
+  const [isActiveTeacher, setIsActiveTeacher] = useState({
+    Name: "Mike",
+    Age: 28,
+    Sex: "Male",
+    Job: "English Teacher",
+    Img: require("../../assets/img/Mike.png"),
+  });
 
   // useContextでstateを各コンポーネントに渡す
   const contextValue = {

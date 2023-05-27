@@ -1,12 +1,15 @@
+import { useContext } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { IconButton } from "react-native-paper";
 
 export const MenuArea = ({ navigation, isActive }) => {
+  const {} = useContext(dataContext);
+
   const navigateSelectPage = () => {
     navigation.navigate("先生選択画面", {});
   };
 
-  const navigateTalkPage = async () => {
+  const navigateTalkPage = () => {
     navigation.navigate("会話画面");
   };
 
