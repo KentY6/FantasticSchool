@@ -5,7 +5,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { TalkArea } from "../components/TalkArea";
 import { InputForm } from "../components/InputForm";
 import axios from "axios";
-import { CHAT_GPT_KEY, DEEPL_KEY } from "@env";
+import { CHAT_GPT_KEY } from "@env";
+import { getDeepLApi } from "../api/ApiSettings";
 
 export const TalkPage = ({ navigation }) => {
   // 会話履歴を格納するstate
@@ -20,6 +21,15 @@ export const TalkPage = ({ navigation }) => {
 
   // 選ばれている先生を受け取る
   const { isActiveTeacher } = useContext(dataContext);
+
+  // 翻訳機能
+  const translation = async (data, index) => {
+    const resData = await getDeepLApi(data);
+    // 翻訳結果をオブジェクトに追加する
+    const addTranslationText = [...conversationLog];
+    addTranslationText[index] = { ...data, translationText: resData };
+    setConversationLog(addTranslationText);
+  };
 
   // chatGPTのApiキー
   const chatGptKey = CHAT_GPT_KEY;
@@ -40,18 +50,13 @@ export const TalkPage = ({ navigation }) => {
   Available Languages:${isActiveTeacher.AvailableLanguages},\
   Characteristic:${isActiveTeacher.Characteristic} `;
 
-  // deepLのApiキー
-  const deepLKey = `DeepL-Auth-Key ${DEEPL_KEY}`;
-  // deppLのエンドポイント
-  const deepLUrl = "https://api-free.deepl.com/v2/translate";
-
   // チャット欄に入力したテキストを送る
   const talkStart = (text) => {
     if (text.length === 0) return;
     const newConversationLog = {
       ...conversationLog,
       talkText: text,
-      whoseText: "you",
+      whoseText: "student",
       translationText: "",
     };
     setConversationLog([...conversationLog, newConversationLog]);
@@ -107,33 +112,6 @@ export const TalkPage = ({ navigation }) => {
     setConversationLog([...conversationLog, newConversationLog]);
   }, [teachersAnswer]);
 
-  // DeepLのAPIで翻訳する
-  const getDeepLApi = async (data, index) => {
-    try {
-      const response = await axios.post(
-        deepLUrl,
-        {
-          text: data.talkText,
-          target_lang: "JA",
-        },
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: deepLKey,
-          },
-        }
-      );
-
-      // 翻訳結果をオブジェクトに追加する
-      const resData = response.data.translations[0].text;
-      const addTranslationText = [...conversationLog];
-      addTranslationText[index] = { ...data, translationText: resData };
-      setConversationLog(addTranslationText);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   return (
     <View style={styles.talkPage}>
       <Header title={"会話画面"} />
@@ -145,7 +123,7 @@ export const TalkPage = ({ navigation }) => {
       <TalkArea
         isActiveTeacher={isActiveTeacher}
         conversationLog={conversationLog}
-        getDeepLApi={getDeepLApi}
+        translation={translation}
       />
 
       <View style={styles.InputForm}>

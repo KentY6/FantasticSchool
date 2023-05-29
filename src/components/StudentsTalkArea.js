@@ -3,14 +3,14 @@ import { View, StyleSheet, Text, Image } from "react-native";
 
 export const StudentsTalkArea = ({ isActiveTeacher, data }) => {
   return (
-    <View style={styles.yourTextContainer}>
+    <View style={styles.studentsTextContainer}>
       <View style={styles.talkBox}>
         <View style={styles.nonActive}>
           <Image style={styles.teachersIcon} source={isActiveTeacher.Img} />
         </View>
 
-        <View style={styles.yourText}>
-          <View style={styles.yourTriangle}></View>
+        <View style={styles.studentsText}>
+          <View style={styles.studentsTriangle}></View>
           <Text>{data.talkText}</Text>
         </View>
       </View>
@@ -21,13 +21,13 @@ export const StudentsTalkArea = ({ isActiveTeacher, data }) => {
 const styles = StyleSheet.create({
   talkArea: { width: "100%", marginBottom: 120 },
   talkBox: { flexDirection: "row" },
-  yourTextContainer: {
+  studentsTextContainer: {
     maxWidth: "100%",
     alignItems: "flex-end",
     justifyContent: "flex-end",
     margin: 10,
   },
-  yourText: {
+  studentsText: {
     maxWidth: "60%",
     marginRight: 10,
     padding: 10,
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9DEFC",
     position: "relative",
   },
-  yourTriangle: {
+  studentsTriangle: {
     position: "absolute",
     top: 10,
     right: -10,

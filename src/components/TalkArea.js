@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView } from "react-native";
 import { StudentsTalkArea } from "./StudentsTalkArea";
 import { TeachersTalkArea } from "./TeachersTalkArea";
 
-export const TalkArea = ({ isActiveTeacher, conversationLog, getDeepLApi }) => {
+export const TalkArea = ({ isActiveTeacher, conversationLog, translation }) => {
   return (
     <ScrollView style={styles.talkArea}>
       {conversationLog.map((data, index) => {
@@ -11,7 +11,7 @@ export const TalkArea = ({ isActiveTeacher, conversationLog, getDeepLApi }) => {
         return isTeachersText ? (
           <TeachersTalkArea
             isActiveTeacher={isActiveTeacher}
-            onPress={() => getDeepLApi(data, index)}
+            onPress={() => translation(data, index)}
             data={data}
             key={index}
           />
