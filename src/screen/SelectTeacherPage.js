@@ -10,7 +10,7 @@ export const SelectTeacherPage = ({ navigation }) => {
 
   // 先生切り替え機能
   const toggleActiveTeacher = (data) => {
-    setIsActiveTeacher(data.Name);
+    setIsActiveTeacher(data);
   };
 
   //デフォルトの ヘッダーを非表示にする

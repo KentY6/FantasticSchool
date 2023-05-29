@@ -1,5 +1,5 @@
 import { StyleSheet, SafeAreaView } from "react-native";
-import { Main } from "./src/screen/Main";
+import { Main } from "./screen/Main";
 
 export default function App() {
   return (
