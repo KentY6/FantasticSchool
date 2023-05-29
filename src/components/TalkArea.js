@@ -16,11 +16,7 @@ export const TalkArea = ({ isActiveTeacher, conversationLog, translation }) => {
             key={index}
           />
         ) : (
-          <StudentsTalkArea
-            isActiveTeacher={isActiveTeacher}
-            data={data}
-            key={index}
-          />
+          <StudentsTalkArea data={data} key={index} />
         );
       })}
     </ScrollView>

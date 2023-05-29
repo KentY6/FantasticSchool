@@ -1,13 +1,11 @@
 import React from "react";
-import { View, StyleSheet, Text, Image } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 
-export const StudentsTalkArea = ({ isActiveTeacher, data }) => {
+export const StudentsTalkArea = ({ data }) => {
   return (
     <View style={styles.studentsTextContainer}>
       <View style={styles.talkBox}>
-        <View style={styles.nonActive}>
-          <Image style={styles.teachersIcon} source={isActiveTeacher.Img} />
-        </View>
+        <View style={styles.nonActive}></View>
 
         <View style={styles.studentsText}>
           <View style={styles.studentsTriangle}></View>
