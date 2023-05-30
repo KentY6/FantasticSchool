@@ -67,6 +67,7 @@ export const AuthenticationPage = ({ navigation }) => {
           <TextInput
             style={styles.inputForm}
             value={password}
+            secureTextEntry={true}
             onChange={(password) => setPassword(password)}
           />
         </View>
