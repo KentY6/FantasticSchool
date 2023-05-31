@@ -1,5 +1,5 @@
 import { Header } from "../components/Header";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -23,6 +23,7 @@ export const AuthenticationPage = ({ navigation }) => {
     navigation.navigate("先生選択画面", {});
   };
 
+  // アカウント登録画面に切り替え
   const goToAccountRegistration = () => {
     if (authState === "ログイン") setAuthState("アカウント登録");
     if (authState === "アカウント登録") setAuthState("ログイン");
@@ -35,20 +36,24 @@ export const AuthenticationPage = ({ navigation }) => {
       mailAddress.length > 0 &&
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mailAddress)
     ) {
-      message = `メールアドレスが正しい形式で
+      message = `メールアドレスが正しい形式で\n
         入力されていません`;
     }
-    if (passWord.length > 0 && passWord.length < 6) {
+    if (password.length > 0 && password.length < 6) {
       message = "パスワードは6文字以上入力してください";
     }
     if (
       (mailAddress.length > 0 && !/^[!-~]+$/.test(mailAddress)) ||
-      (passWord.length > 0 && !/^[!-~]+$/.test(passWord))
+      (password.length > 0 && !/^[!-~]+$/.test(password))
     ) {
       message = "半角英数字で記載してください";
     }
     return setErrorMessage(message);
   };
+
+  useEffect(() => {
+    getErrorMessage();
+  }, [mailAddress, password]);
 
   return (
     <View style={styles.authenticationPage}>
@@ -59,7 +64,7 @@ export const AuthenticationPage = ({ navigation }) => {
           <TextInput
             style={styles.inputForm}
             value={mailAddress}
-            onChange={(mailAddress) => setMailAddress(mailAddress)}
+            onChange={(e) => setMailAddress(e.nativeEvent.text)}
           />
         </View>
         <View style={styles.authenticationBox}>
@@ -68,8 +73,15 @@ export const AuthenticationPage = ({ navigation }) => {
             style={styles.inputForm}
             value={password}
             secureTextEntry={true}
-            onChange={(password) => setPassword(password)}
+            onChange={(e) => setPassword(e.nativeEvent.text)}
           />
+        </View>
+        <View
+          style={
+            errorMessage.length === 0 ? styles.nonActive : styles.errorMessage
+          }
+        >
+          <Text style={styles.errorText}>{errorMessage}</Text>
         </View>
         <TouchableOpacity
           style={styles.authenticationButton}
@@ -122,4 +134,7 @@ const styles = StyleSheet.create({
   buttonText: { fontSize: 18 },
   accountRegistration: { marginTop: "15%" },
   accountRegistrationText: { color: "blue", fontSize: 18 },
+  errorMessage: { margin: "10%" },
+  errorText: { color: "red" },
+  nonActive: { display: "none" },
 });
