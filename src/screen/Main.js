@@ -17,14 +17,10 @@ export const Main = () => {
     Img: require("../../assets/img/Mike.png"),
   });
 
-  const [loginState, setLoginState] = useState(false);
-
   // useContextでstateを各コンポーネントに渡す
   const contextValue = {
     isActiveTeacher,
     setIsActiveTeacher,
-    loginState,
-    setLoginState,
   };
 
   return (

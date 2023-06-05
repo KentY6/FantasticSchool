@@ -6,7 +6,11 @@ export const Header = ({ title }) => {
     <View style={styles.header}>
       <Text style={styles.title}>{title}</Text>
       <TouchableOpacity
-        style={title === "ログイン" ? styles.nonActive : styles.menu}
+        style={
+          title === "ログイン" || title === "アカウント登録"
+            ? styles.nonActive
+            : styles.menu
+        }
       >
         <IconButton icon={"menu"} />
       </TouchableOpacity>

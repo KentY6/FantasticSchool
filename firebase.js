@@ -1,6 +1,6 @@
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
+import "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import {
   FIREBASE_API_KEY,
   FIREBASE_AUTH_DOMAIN,
@@ -11,7 +11,7 @@ import {
   FIREBASE_MEASUREMENT_ID,
 } from "@env";
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,
   authDomain: FIREBASE_AUTH_DOMAIN,
   projectId: FIREBASE_PROJECT_ID,
@@ -21,7 +21,5 @@ const firebaseConfig = {
   measurementId: FIREBASE_MEASUREMENT_ID,
 };
 
-const app = firebase.initializeApp(firebaseConfig);
-
-export const auth = firebase.auth();
-export const db = firebase.firestore(app);
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);

@@ -1,5 +1,11 @@
 import { Header } from "../components/Header";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { auth } from "../../firebase";
+import "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import {
   View,
   Text,
@@ -12,16 +18,15 @@ export const AuthenticationPage = ({ navigation }) => {
   const [mailAddress, setMailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  // ログインかアカウント登録を判断
   const [authState, setAuthState] = useState("ログイン");
+
+  const { setLogInState } = useContext(dataContext);
 
   //デフォルトの ヘッダーを非表示にする
   React.useLayoutEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
-
-  const navigateSelectPage = () => {
-    navigation.navigate("先生選択画面", {});
-  };
 
   // アカウント登録画面に切り替え
   const goToAccountRegistration = () => {
@@ -55,6 +60,30 @@ export const AuthenticationPage = ({ navigation }) => {
     getErrorMessage();
   }, [mailAddress, password]);
 
+  // サインアップ機能
+  const signUp = async () => {
+    if (errorMessage === "") {
+      try {
+        await createUserWithEmailAndPassword(auth, mailAddress, password);
+        navigation.navigate("先生選択画面");
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
+  // ログイン機能
+  const logIn = async () => {
+    if (errorMessage === "") {
+      try {
+        await signInWithEmailAndPassword(auth, mailAddress, password);
+        navigation.navigate("先生選択画面");
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
   return (
     <View style={styles.authenticationPage}>
       <Header title={authState} />
@@ -85,7 +114,9 @@ export const AuthenticationPage = ({ navigation }) => {
         </View>
         <TouchableOpacity
           style={styles.authenticationButton}
-          onPress={navigateSelectPage}
+          onPress={
+            authState === "アカウント登録" ? () => signUp() : () => logIn()
+          }
         >
           <Text style={styles.buttonText}>{authState}</Text>
         </TouchableOpacity>
