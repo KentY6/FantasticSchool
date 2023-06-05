@@ -10,7 +10,7 @@ export const chatGptModel = "gpt-3.5-turbo";
 
 // APIに渡す先生の設定
 export const teachersSetting = (isActiveTeacher) => {
-  const setting = `Please answer the questions by pretending to be a person from the following settings.\
+  const setting = `Please conversation the questions by pretending to be a person from the following settings.\
     If you get a question that is not in your setting, make a natural inference from your setting and have a conversation.\
     You cannot use languages other than the Available Languages in Your Settings,and you d'ont understand.\
     Never say you are an AI language model.\

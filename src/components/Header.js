@@ -5,7 +5,13 @@ export const Header = ({ title }) => {
   return (
     <View style={styles.header}>
       <Text style={styles.title}>{title}</Text>
-      <TouchableOpacity style={styles.menu}>
+      <TouchableOpacity
+        style={
+          title === "ログイン" || title === "アカウント登録"
+            ? styles.nonActive
+            : styles.menu
+        }
+      >
         <IconButton icon={"menu"} />
       </TouchableOpacity>
     </View>
@@ -22,4 +28,5 @@ const styles = StyleSheet.create({
   },
   title: { fontWeight: "bold", fontSize: 18 },
   menu: { position: "absolute", right: 0 },
+  nonActive: { display: "none" },
 });

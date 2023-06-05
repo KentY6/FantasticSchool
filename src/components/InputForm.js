@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { View, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import { IconButton } from "react-native-paper";
 
 export const InputForm = ({ talkStart }) => {
