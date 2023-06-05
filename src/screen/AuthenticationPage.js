@@ -1,5 +1,5 @@
 import { Header } from "../components/Header";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import "firebase/auth";
 import {
@@ -21,8 +21,6 @@ export const AuthenticationPage = ({ navigation }) => {
   // ログインかアカウント登録を判断
   const [authState, setAuthState] = useState("ログイン");
 
-  const { setLogInState } = useContext(dataContext);
-
   //デフォルトの ヘッダーを非表示にする
   React.useLayoutEffect(() => {
     navigation.setOptions({ headerShown: false });
@@ -32,6 +30,8 @@ export const AuthenticationPage = ({ navigation }) => {
   const goToAccountRegistration = () => {
     if (authState === "ログイン") setAuthState("アカウント登録");
     if (authState === "アカウント登録") setAuthState("ログイン");
+    setMailAddress("");
+    setPassword("");
   };
 
   // ヴァリデーション設定
