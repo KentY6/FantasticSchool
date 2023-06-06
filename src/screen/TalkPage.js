@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { TalkArea } from "../components/TalkArea";
 import { InputForm } from "../components/InputForm";
 import { getChatGptApi, getDeepLApi } from "../api/ApiSettings";
+import { LogoutPage } from "./LogoutPage";
 
 export const TalkPage = ({ navigation }) => {
   // 会話履歴を格納するstate
@@ -17,8 +18,14 @@ export const TalkPage = ({ navigation }) => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
-  // 選ばれている先生を受け取る
-  const { isActiveTeacher } = useContext(dataContext);
+  // contextを受け取る
+  const {
+    isActiveTeacher,
+    setIsActiveTeacher,
+    toggleActiveMenu,
+    isActiveMenu,
+    setIsActiveMenu,
+  } = useContext(dataContext);
 
   // チャット欄に入力したテキストを送る
   const talkStart = (text) => {
@@ -62,7 +69,16 @@ export const TalkPage = ({ navigation }) => {
 
   return (
     <View style={styles.talkPage}>
-      <Header title={"会話画面"} />
+      <Header
+        title={"会話画面"}
+        toggleActiveMenu={toggleActiveMenu}
+        isActiveMenu={isActiveMenu}
+      />
+      <View
+        style={isActiveMenu === false ? styles.nonActive : styles.activeMenu}
+      >
+        <LogoutPage navigation={navigation} setIsActiveMenu={setIsActiveMenu} />
+      </View>
       <View style={styles.isTeacher}>
         <Text style={styles.isTeacherText}>Teacher is</Text>
         <Text style={styles.teachersName}>{isActiveTeacher.Name}</Text>
@@ -103,4 +119,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
   },
+  activeMenu: { width: "100%" },
+  nonActive: { display: "none" },
 });

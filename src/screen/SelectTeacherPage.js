@@ -3,24 +3,40 @@ import { MenuArea } from "../components/MenuArea";
 import { TeachersList } from "../components/TeachersList";
 import { Header } from "../components/Header";
 import React, { useContext } from "react";
+import { LogoutPage } from "./LogoutPage";
 
 export const SelectTeacherPage = ({ navigation }) => {
-  // // stateを受け取る
-  const { isActiveTeacher, setIsActiveTeacher } = useContext(dataContext);
+  // // contextを受け取る
+  const {
+    isActiveTeacher,
+    setIsActiveTeacher,
+    toggleActiveMenu,
+    isActiveMenu,
+    setIsActiveMenu,
+  } = useContext(dataContext);
 
   // 先生切り替え機能
   const toggleActiveTeacher = (data) => {
     setIsActiveTeacher(data);
   };
 
-  //デフォルトの ヘッダーを非表示にする
+  // デフォルトの ヘッダーを非表示にする
   React.useLayoutEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
   return (
     <View style={styles.selectTeacherPage}>
-      <Header title={"先生選択画面"} />
+      <Header
+        title={"先生選択画面"}
+        isActiveMenu={isActiveMenu}
+        toggleActiveMenu={toggleActiveMenu}
+      />
+      <View
+        style={isActiveMenu === false ? styles.nonActive : styles.activeMenu}
+      >
+        <LogoutPage navigation={navigation} setIsActiveMenu={setIsActiveMenu} />
+      </View>
       <View style={styles.selectMsg}>
         <Text style={styles.selectMsgText}>Select Your Teacher</Text>
         <Text style={styles.selectMsgText}>好きな先生を選んでみよう！</Text>
@@ -61,4 +77,6 @@ const styles = StyleSheet.create({
     right: 0,
     flex: 2,
   },
+  activeMenu: { width: "100%" },
+  nonActive: { display: "none" },
 });
