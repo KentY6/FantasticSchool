@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { IconButton } from "react-native-paper";
 
-export const Header = ({ title }) => {
+export const Header = ({ title, isActiveMenu, toggleActiveMenu }) => {
   return (
     <View style={styles.header}>
       <Text style={styles.title}>{title}</Text>
@@ -11,8 +11,9 @@ export const Header = ({ title }) => {
             ? styles.nonActive
             : styles.menu
         }
+        onPress={toggleActiveMenu}
       >
-        <IconButton icon={"menu"} />
+        <IconButton icon={isActiveMenu === false ? "menu" : "close"} />
       </TouchableOpacity>
     </View>
   );

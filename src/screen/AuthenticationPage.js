@@ -65,6 +65,9 @@ export const AuthenticationPage = ({ navigation }) => {
     if (errorMessage === "") {
       try {
         await createUserWithEmailAndPassword(auth, mailAddress, password);
+        setMailAddress("");
+        setPassword("");
+        setAuthState("ログイン");
         navigation.navigate("先生選択画面");
       } catch (err) {
         console.error(err);
@@ -77,6 +80,8 @@ export const AuthenticationPage = ({ navigation }) => {
     if (errorMessage === "") {
       try {
         await signInWithEmailAndPassword(auth, mailAddress, password);
+        setMailAddress("");
+        setPassword("");
         navigation.navigate("先生選択画面");
       } catch (err) {
         console.error(err);

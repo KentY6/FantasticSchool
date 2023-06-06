@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useState, createContext } from "react";
 import { AuthenticationPage } from "./AuthenticationPage";
+import { LogoutPage } from "./LogoutPage";
 
 const Stack = createNativeStackNavigator();
 dataContext = createContext();
@@ -17,10 +18,21 @@ export const Main = () => {
     Img: require("../../assets/img/Mike.png"),
   });
 
+  // メニュー画面のオンオフ
+  const [isActiveMenu, setIsActiveMenu] = useState(false);
+
+  // メニューボタンのオンオフ切り替え機能
+  const toggleActiveMenu = () => {
+    setIsActiveMenu(!isActiveMenu);
+  };
+
   // useContextでstateを各コンポーネントに渡す
   const contextValue = {
     isActiveTeacher,
     setIsActiveTeacher,
+    isActiveMenu,
+    setIsActiveMenu,
+    toggleActiveMenu,
   };
 
   return (
