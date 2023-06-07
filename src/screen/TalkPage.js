@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Header } from "../components/Header";
 import { MenuArea } from "../components/MenuArea";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, Alert } from "react";
 import { TalkArea } from "../components/TalkArea";
 import { InputForm } from "../components/InputForm";
 import { getChatGptApi, getDeepLApi } from "../api/ApiSettings";
@@ -12,6 +12,8 @@ export const TalkPage = ({ navigation }) => {
   const [conversationLog, setConversationLog] = useState([]);
   // chatGPT APIの回答を格納するstate
   const [teachersAnswer, setTeachersAnswer] = useState("");
+  // 先生からの返答トークン数をカウントする
+  const [tokenCount, setTokenCount] = useState(0);
 
   //   //デフォルトのヘッダーを非表示にする
   React.useLayoutEffect(() => {
@@ -19,13 +21,8 @@ export const TalkPage = ({ navigation }) => {
   }, [navigation]);
 
   // contextを受け取る
-  const {
-    isActiveTeacher,
-    setIsActiveTeacher,
-    toggleActiveMenu,
-    isActiveMenu,
-    setIsActiveMenu,
-  } = useContext(dataContext);
+  const { isActiveTeacher, toggleActiveMenu, isActiveMenu, setIsActiveMenu } =
+    useContext(dataContext);
 
   // チャット欄に入力したテキストを送る
   const talkStart = (text) => {
@@ -42,8 +39,20 @@ export const TalkPage = ({ navigation }) => {
 
   // 先生からの返答を受け取る
   const getTeachersAnswer = async (text) => {
-    const resData = await getChatGptApi(text, teachersAnswer, isActiveTeacher);
-    setTeachersAnswer(resData);
+    if (tokenCount < 10000) {
+      const resData = await getChatGptApi(
+        text,
+        teachersAnswer,
+        isActiveTeacher
+      );
+      setTeachersAnswer(resData);
+      // 先生の返答をトークンとしてカウントする
+      setTokenCount(tokenCount + resData.length);
+    }
+    //  1日10000文字を超える場合、キャンセルされる
+    else {
+      alert("本日入力できる回数はここまでとなります。翌日にご利用ください");
+    }
   };
 
   // chatGPTからの返答を会話ログに追加する
@@ -66,6 +75,13 @@ export const TalkPage = ({ navigation }) => {
     addTranslationText[index] = { ...data, translationText: resData };
     setConversationLog(addTranslationText);
   };
+
+  // 今日の日付を取得
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = today.getMonth() + 1;
+  let date = today.getDate();
+  let todayIs = year + "/" + month + "/" + date;
 
   return (
     <View style={styles.talkPage}>
