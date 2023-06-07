@@ -70,6 +70,7 @@ export const TalkPage = ({ navigation }) => {
   return (
     <View style={styles.talkPage}>
       <Header
+        style={styles.header}
         title={"会話画面"}
         toggleActiveMenu={toggleActiveMenu}
         isActiveMenu={isActiveMenu}
@@ -103,6 +104,7 @@ export const TalkPage = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   talkPage: { alignItems: "center", width: "100%", flex: 8 },
+  header: { zIndex: 2, position: "absolute" },
   isTeacher: { flexDirection: "row", margin: 10 },
   isTeacherText: { margin: 5, fontSize: 20 },
   teachersName: { margin: 5, fontSize: 20, color: "#E438D3" },
@@ -111,6 +113,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: "100%",
     marginBottom: 60,
+    zIndex: 0,
   },
   bottomMenu: {
     flex: 2,
@@ -118,7 +121,14 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
+    zIndex: 0,
   },
-  activeMenu: { width: "100%" },
+  activeMenu: {
+    width: "100%",
+    height: "100%",
+    marginTop: 30,
+    zIndex: 1,
+    backgroundColor: "white",
+  },
   nonActive: { display: "none" },
 });

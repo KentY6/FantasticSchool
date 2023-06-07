@@ -28,6 +28,7 @@ export const SelectTeacherPage = ({ navigation }) => {
   return (
     <View style={styles.selectTeacherPage}>
       <Header
+        style={styles.header}
         title={"先生選択画面"}
         isActiveMenu={isActiveMenu}
         toggleActiveMenu={toggleActiveMenu}
@@ -63,6 +64,7 @@ const styles = StyleSheet.create({
     position: "relative",
     flex: 8,
   },
+  header: { zIndex: 2, position: "absolute" },
   selectMsg: {
     margin: 20,
     alignItems: "center",
@@ -77,6 +79,12 @@ const styles = StyleSheet.create({
     right: 0,
     flex: 2,
   },
-  activeMenu: { width: "100%" },
+  activeMenu: {
+    width: "100%",
+    height: "100%",
+    marginTop: 30,
+    zIndex: 1,
+    backgroundColor: "white",
+  },
   nonActive: { display: "none" },
 });
