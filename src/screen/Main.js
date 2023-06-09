@@ -4,12 +4,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useState, createContext } from "react";
 import { AuthenticationPage } from "./AuthenticationPage";
-import { LogoutPage } from "./LogoutPage";
 
 const Stack = createNativeStackNavigator();
 dataContext = createContext();
 
 export const Main = () => {
+  // どの先生が選ばれているか
   const [isActiveTeacher, setIsActiveTeacher] = useState({
     Name: "Mike",
     Age: 28,
