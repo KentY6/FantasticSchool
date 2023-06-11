@@ -43,7 +43,10 @@ export const TalkPage = ({ navigation }) => {
       translationText: "",
     };
     setConversationLog([...conversationLog, newConversationLog]);
+    // チャットGPTのAPIを叩きにいく
     getTeachersAnswer(text);
+    // トークンに自分が入力したテキストをセット
+    setTokenCount(tokenCount + text.length);
   };
 
   // 先生からの返答を受け取る
