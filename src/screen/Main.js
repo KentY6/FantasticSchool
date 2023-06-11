@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useState, createContext } from "react";
 import { AuthenticationPage } from "./AuthenticationPage";
+import { MenuTab } from "../components/MenuTab";
 
 const Stack = createNativeStackNavigator();
 dataContext = createContext();
@@ -17,6 +18,9 @@ export const Main = () => {
     Job: "English Teacher",
     Img: require("../../assets/img/Mike.png"),
   });
+
+  // 会話履歴を格納するstate
+  const [conversationLog, setConversationLog] = useState([]);
 
   // メニュー画面のオンオフ
   const [isActiveMenu, setIsActiveMenu] = useState(false);
@@ -33,6 +37,8 @@ export const Main = () => {
     isActiveMenu,
     setIsActiveMenu,
     toggleActiveMenu,
+    conversationLog,
+    setConversationLog,
   };
 
   return (
@@ -40,8 +46,7 @@ export const Main = () => {
       <dataContext.Provider value={contextValue}>
         <Stack.Navigator>
           <Stack.Screen name="認証画面" component={AuthenticationPage} />
-          <Stack.Screen name="先生選択画面" component={SelectTeacherPage} />
-          <Stack.Screen name="会話画面" component={TalkPage} />
+          <Stack.Screen name="Menu" component={MenuTab} />
         </Stack.Navigator>
       </dataContext.Provider>
     </NavigationContainer>
