@@ -68,7 +68,7 @@ export const AuthenticationPage = ({ navigation }) => {
         setMailAddress("");
         setPassword("");
         setAuthState("ログイン");
-        navigation.navigate("先生選択画面");
+        navigation.navigate("Menu");
       } catch (err) {
         console.error(err);
       }
@@ -82,7 +82,7 @@ export const AuthenticationPage = ({ navigation }) => {
         await signInWithEmailAndPassword(auth, mailAddress, password);
         setMailAddress("");
         setPassword("");
-        navigation.navigate("先生選択画面");
+        navigation.navigate("Menu");
       } catch (err) {
         console.error(err);
       }

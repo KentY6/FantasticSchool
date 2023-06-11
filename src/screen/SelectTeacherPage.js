@@ -1,9 +1,9 @@
 import { View, StyleSheet, Text } from "react-native";
-import { MenuArea } from "../components/MenuArea";
 import { TeachersList } from "../components/TeachersList";
 import { Header } from "../components/Header";
 import React, { useContext } from "react";
 import { LogoutPage } from "./LogoutPage";
+// import { MenuTab } from "../components/MenuTab";
 
 export const SelectTeacherPage = ({ navigation }) => {
   // // contextを受け取る
@@ -13,11 +13,13 @@ export const SelectTeacherPage = ({ navigation }) => {
     toggleActiveMenu,
     isActiveMenu,
     setIsActiveMenu,
+    setConversationLog,
   } = useContext(dataContext);
 
   // 先生切り替え機能
   const toggleActiveTeacher = (data) => {
     setIsActiveTeacher(data);
+    setConversationLog([]);
   };
 
   // デフォルトの ヘッダーを非表示にする
@@ -49,10 +51,6 @@ export const SelectTeacherPage = ({ navigation }) => {
           toggleActiveTeacher={toggleActiveTeacher}
         />
       </View>
-
-      <View style={styles.bottomMenu}>
-        <MenuArea navigation={navigation} isActive={"selectPage"} />
-      </View>
     </View>
   );
 };
@@ -71,14 +69,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   selectMsgText: { fontSize: 20 },
-  teachers: { marginTop: "5%", marginBottom: "55%" },
-  bottomMenu: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    flex: 2,
-  },
+  teachers: { marginTop: "5%", marginBottom: "45%" },
   activeMenu: {
     width: "100%",
     height: "100%",
