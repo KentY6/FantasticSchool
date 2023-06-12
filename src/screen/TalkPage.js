@@ -43,10 +43,10 @@ export const TalkPage = ({ navigation }) => {
       translationText: "",
     };
     setConversationLog([...conversationLog, newConversationLog]);
-    // チャットGPTのAPIを叩きにいく
-    getTeachersAnswer(text);
     // トークンに自分が入力したテキストをセット
     setTokenCount(tokenCount + text.length);
+    // チャットGPTのAPIを叩きにいく
+    getTeachersAnswer(text);
   };
 
   // 先生からの返答を受け取る
@@ -57,9 +57,10 @@ export const TalkPage = ({ navigation }) => {
         teachersAnswer,
         isActiveTeacher
       );
-      setTeachersAnswer(resData);
+
       // 先生の返答をトークンとしてカウントする
       setTokenCount(tokenCount + resData.length);
+      setTeachersAnswer(resData);
     }
     //  1日20000文字を超える場合、キャンセルされる
     else {
@@ -99,11 +100,13 @@ export const TalkPage = ({ navigation }) => {
 
   // ユーザーデータ(トークン)取得
   const getUsersTokenCount = async () => {
-    const userDataRef = doc(db, `users/${user.uid}/tokenCount/tokenCount`);
+    const userDataRef = doc(db, `users/${user.uid}`);
     const userTokenCountDocSnap = await getDoc(userDataRef);
     if (userTokenCountDocSnap.exists()) {
       const getTokenCountData = userTokenCountDocSnap.data().tokenCount;
-      setUsersTokenCount(getTokenCountData);
+      if (getTokenCountData > 0) {
+        setUsersTokenCount(getTokenCountData);
+      }
     } else {
       return;
     }
@@ -111,7 +114,7 @@ export const TalkPage = ({ navigation }) => {
 
   // ユーザーデータ(日付)取得
   const getUsersDateData = async () => {
-    const userDataRef = doc(db, `users/${user.uid}/todayIs/todayIs`);
+    const userDataRef = doc(db, `users/${user.uid}`);
     const userDateDataDocSnap = await getDoc(userDataRef);
     if (userDateDataDocSnap.exists()) {
       const getDateData = userDateDataDocSnap.data().todayIs;
@@ -132,31 +135,23 @@ export const TalkPage = ({ navigation }) => {
     }
   }, [usersTodayData]);
 
-  // トークンを保存する機能
-  const saveTokenCount = async () => {
-    const tokenCountDocRef = doc(db, `users/${user.uid}/tokenCount/tokenCount`);
+  // トークン・日付を保存する機能
+  const saveUsersData = async () => {
+    const tokenCountDocRef = doc(db, `users/${user.uid}`);
     try {
-      await setDoc(tokenCountDocRef, { tokenCount });
+      await setDoc(tokenCountDocRef, {
+        tokenCount: tokenCount,
+        todayIs: todayIs,
+      });
     } catch (error) {
       console.error(error);
     }
   };
-  // 日付を保存する機能
-  const saveDateData = async () => {
-    const DateDataDocRef = doc(db, `users/${user.uid}/todayIs/todayIs`);
-    try {
-      await setDoc(DateDataDocRef, { todayIs });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  // トークンと日付をデータベースにセットする
   useEffect(() => {
-    if (tokenCount !== 0) {
-      saveTokenCount();
-      saveDateData();
+    if (tokenCount > 0) {
+      saveUsersData();
     }
-  }, [getTeachersAnswer]);
+  }, [teachersAnswer]);
 
   return (
     <View style={styles.talkPage}>
