@@ -11,8 +11,8 @@ Google Playストアに登録するため準備中
 -バックエンド環境：Firebase Authentication(Firebase ver.9.19), Firestore Dartabase(Firebase ver.9.19)<br>
 
 ## 使用API
--openAI
--DeepL
+-openAI<br>
+-DeepL<br>
 
 ## アプリの概要
 -AIを使用した最先端の英会話チャットアプリ。<br>
@@ -21,7 +21,7 @@ Google Playストアに登録するため準備中
 
 ## アプリの使い方
 -先生を選択し、会話画面に移動します。入力フォームにテキストを入力し送信ボタンを押せば、先生から返信がきます。<br>
--訳ボタンを押せば日本語の訳がチャットの下に表示されます。<br>
+-先生の話す内容が分からない時は、訳ボタンを押せば日本語の訳がチャットの下に表示されます。<br>
 
 ## 使用した技術
 -react-navigationによる画面遷移機能<br>
