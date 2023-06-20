@@ -20,6 +20,13 @@ export const SelectTeacherPage = ({ navigation }) => {
   const toggleActiveTeacher = (data) => {
     setIsActiveTeacher(data);
     setConversationLog([]);
+    // 先生を選択したと同時に会話画面に遷移
+    navigation.navigate("Conversation", {
+      screen: "TalkPage",
+      params: {
+        screen: "Conversation",
+      },
+    });
   };
 
   // デフォルトの ヘッダーを非表示にする
