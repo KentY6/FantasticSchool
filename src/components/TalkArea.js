@@ -24,5 +24,5 @@ export const TalkArea = ({ isActiveTeacher, conversationLog, translation }) => {
 };
 
 const styles = StyleSheet.create({
-  talkArea: { width: "100%", marginBottom: 120 },
+  talkArea: { width: "100%", marginBottom: 60 },
 });

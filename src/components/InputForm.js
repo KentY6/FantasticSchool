@@ -18,6 +18,7 @@ export const InputForm = ({ talkStart }) => {
       <TextInput
         style={styles.textInput}
         value={text}
+        multiline={true}
         onChangeText={(text) => setText(text)}
       />
     </View>
