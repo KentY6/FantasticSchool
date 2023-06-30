@@ -1,9 +1,11 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { IconButton } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export const Header = ({ title, isActiveMenu, toggleActiveMenu }) => {
   return (
     <View style={styles.header}>
+      <SafeAreaView />
       <Text style={styles.title}>{title}</Text>
       <TouchableOpacity
         style={
@@ -21,7 +23,6 @@ export const Header = ({ title, isActiveMenu, toggleActiveMenu }) => {
 
 const styles = StyleSheet.create({
   header: {
-    marginTop: "10%",
     flexDirection: "row",
     width: "100%",
     height: 30,
