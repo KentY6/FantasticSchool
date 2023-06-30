@@ -30,6 +30,6 @@ Google Playストアに登録するため準備中
 -Axiosを使用したAPI取得<br>
 
 ## プライバシーポリシー
--このアプリで取得したEmail addressは認証機能に使用することはありません。<br>
+-このアプリで取得したEmail addressは認証機能以外に使用することはありません。<br>
 -またEmail Address以外の個人情報は取得していません。
 
