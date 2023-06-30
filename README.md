@@ -1,7 +1,7 @@
 # Fantastic School 
 
 ## アプリURL
-Google Playストアに登録するため準備中
+https://play.google.com/store/apps/details?id=com.kenty6.FatasticSchool
 
 ## 環境
 -使用言語：CSS(ver:CSS3), Java Script(ver:Ecma Script2022)<br>
