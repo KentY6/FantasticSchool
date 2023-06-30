@@ -29,5 +29,7 @@ Google Playストアに登録するため準備中
 -Firestore Databaseを使用したデータベース連携<br>
 -Axiosを使用したAPI取得<br>
 
-
+## プライバシーポリシー
+-このアプリで取得したEmail addressは認証機能に使用することはありません。
+-またEmail Address以外の個人情報は取得していません。
 
