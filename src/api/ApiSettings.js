@@ -64,6 +64,8 @@ export const getChatGptApi = async (text, teachersAnswer, isActiveTeacher) => {
     return getData;
   } catch (err) {
     console.error(err);
+    alert(`エラーが発生しました。
+    お手数ですがもう一度ご入力下さい`);
   }
 };
 

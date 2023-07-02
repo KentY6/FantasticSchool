@@ -71,6 +71,7 @@ export const AuthenticationPage = ({ navigation }) => {
         navigation.navigate("Menu");
       } catch (err) {
         console.error(err);
+        alert("メールアドレスかパスワードが間違っています");
       }
     }
   };
@@ -85,6 +86,7 @@ export const AuthenticationPage = ({ navigation }) => {
         navigation.navigate("Menu");
       } catch (err) {
         console.error(err);
+        alert("メールアドレスかパスワードが間違っています");
       }
     }
   };
